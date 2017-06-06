@@ -92,7 +92,33 @@ Freda likes to play Starfleet Commander, Ninja Hamsters, Seahorse Adventures."
 # 
 # Return:
 #   The newly created network data structure
+#
+# network = {user:{'connections':[],'likes':[]},user2,{profile2}...}
+#
+#
+#
+#
+#
+#
+#
+#
+
 def create_data_structure(string_input):
+    cstring='is connected to '
+    lstring=' likes to play '
+    network={}
+    #get all connection and like statements
+    statements=string_input.split('.')
+    connections=[]
+    likes=[]
+    for statement in statements:
+        if cstring in statement:
+            network[statement.split()[0]]={}
+            network[statement.split()[0]]['connections'] = statement[statement.find(cstring)+len(cstring):].split(', ')
+        if lstring in statement:
+            if statement.split()[0] not in network:
+                network[statement.split()[0]]={}
+            network[statement.split()[0]]['likes'] = statement[statement.find(lstring)+len(lstring):].split(', ')
     return network
 
 # ----------------------------------------------------------------------------- # 
@@ -251,8 +277,13 @@ def find_path_to_friend(network, user_A, user_B):
 # Replace this with your own procedure! You can also uncomment the lines below
 # to see how your code behaves. Have fun!
 
-#net = create_data_structure(example_input)
-#print net
+net = create_data_structure(example_input)
+#print 'printing',net
+
+#for user in net:
+#    print user,':',net[user]
+    
+
 #print get_connections(net, "Debra")
 #print get_connections(net, "Mercedes")
 #print get_games_liked(net, "John")
